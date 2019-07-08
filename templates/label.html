@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Labeling</title>
+
+    <style>
+        #main{
+            max-width: 1000px;
+            max-height: 800px;
+            margin: auto;
+        }
+        #content {
+            margin: 24px 0px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="main">
+<h1>Bitte wählen Sie die zutreffende Beschreibung für den folgenden Text:</h1>
+<div id="content">{{ text.content }}</div>
+<div>
+    <a class="btn btn-primary" href="{% url 'vote' text.id 0%}">Nicht relevant</a>
+    <a class="btn btn-primary" href="{% url 'vote' text.id 1%}">Kasuistik</a>
+    <a class="btn btn-primary" href="{% url 'vote' text.id 2%}">Rechtlich Relevant</a>
+
+</div>
+</div>
+</body>
+</html>
