@@ -18,17 +18,32 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
+    volumes:
+      - web-django:/Django
+      - web-static:/Django/static
     env_file:
       - ./django.env
-    command: "gunicorn --bind :8080 JoogleDataLabeling.wsgi:application"
-    ports: 
-      - 8080:8080
+    command: "gunicorn --bind :8000 JoogleDataLabeling.wsgi:application"
+    expose:
+      - "8000"
     volumes:
     - django:/Django
     - /sys:/sys
     depends_on:
     - postgres
 
+  nginx:
+    restart: always
+    build: ./nginx/
+    ports:
+      - "80:80"
+    volumes:
+      - web-static:/www/static
+    links:
+      - web:web
+
 volumes:
   pgdata:
   django:
+  web-django:
+  web-static:
