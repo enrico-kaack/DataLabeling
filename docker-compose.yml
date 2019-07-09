@@ -1,0 +1,34 @@
+version: "3"
+services:
+  postgres:
+    restart: always
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+
+  web:
+    build: .
+    restart: always
+    environment:
+      - DEBUG=true
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    env_file:
+      - ./django.env
+    command: "gunicorn --bind :8080 JoogleDataLabeling.wsgi:application"
+    ports: 
+      - 8080:8080
+    volumes:
+    - django:/Django
+    - /sys:/sys
+    depends_on:
+    - postgres
+
+volumes:
+  pgdata:
+  django:
