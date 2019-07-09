@@ -12,17 +12,18 @@ services:
     build: .
     restart: always
     environment:
-      - DEBUG=true
-      - POSTGRES_HOST=postgres
-      - POSTGRES_PORT=5432
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
+      - SECRET_KEY
+      - DEBUG=False
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - web-django:/Django
       - web-static:/Django/static
     env_file:
-      - ./django.env
+      - ./.env
     command: "gunicorn --bind :8000 JoogleDataLabeling.wsgi:application"
     expose:
       - "8000"
